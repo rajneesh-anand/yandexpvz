@@ -1,0 +1,22 @@
+package com.neo.yandexpvz
+
+const val WELCOME_SCREEN = "WelcomeScreen"
+const val SPLASH_SCREEN = "SplashScreen"
+const val SETTINGS_SCREEN = "SettingsScreen"
+const val SIGNIN_SCREEN = "SignInScreen"
+const val SIGNUP_SCREEN = "SignUpScreen"
+const val HOME_SCREEN = "HomeScreen"
+const val PROFILE_SCREEN = "ProfileScreen"
+const val PASSWORD_SCREEN = "PasswordScreen"
+const val INFO_SCREEN = "InfoScreen"
+const val PRODUCT_SCREEN = "ProductScreen"
+const val MAP_SCREEN = "MapScreen"
+const val PRODUCT_ID = "taskId"
+const val PRODUCT_DEFAULT_ID = "-1"
+const val PRODUCT_ID_ARG = "?$PRODUCT_ID={$PRODUCT_ID}"
+
+const val REDEEM_SCREEN = "RedeemScreen"
+const val REDEEM_ID = "redeemId"
+const val REDEEM_DEFAULT_ID = "-1"
+const val REDEEM_ID_ARG = "?$REDEEM_ID={$REDEEM_ID}"
+const val GIFT_SCREEN = "GiftScreen"

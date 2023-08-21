@@ -1,0 +1,37 @@
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="vector"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:name="path"
+        android:pathData="M 12.411 23.566 C 18.149 23.566 22.798 18.767 22.798 12.845 C 22.798 6.926 18.149 2.125 12.411 2.125 C 6.675 2.125 2.027 6.926 2.027 12.845 C 2.027 18.767 6.675 23.566 12.411 23.566 Z"
+        android:fillColor="#021024"
+        android:fillAlpha="0.1"
+        android:strokeWidth="1"/>
+    <path
+        android:name="path_1"
+        android:pathData="M 21.068 12.25 C 21.068 17.514 16.934 21.781 11.835 21.781 C 6.738 21.781 2.602 17.514 2.602 12.25 C 2.602 6.987 6.738 2.722 11.835 2.722 C 16.934 2.722 21.068 6.987 21.068 12.25 Z"
+        android:fillColor="#ffcf23"
+        android:strokeWidth="1"/>
+    <path
+        android:name="path_2"
+        android:pathData="M 22.221 12.25 C 22.221 18.171 17.571 22.971 11.835 22.971 C 6.1 22.971 1.449 18.171 1.449 12.25 C 1.449 6.33 6.1 1.529 11.835 1.529 C 17.571 1.529 22.221 6.33 22.221 12.25 Z M 11.835 21.781 C 16.934 21.781 21.068 17.514 21.068 12.25 C 21.068 6.987 16.934 2.722 11.835 2.722 C 6.738 2.722 2.602 6.987 2.602 12.25 C 2.602 17.514 6.738 21.781 11.835 21.781 Z"
+        android:fillColor="#b96f00"
+        android:strokeWidth="1"
+        android:fillType="evenOdd"/>
+    <path
+        android:name="path_3"
+        android:pathData="M 11.835 4.508 C 7.692 4.508 4.334 7.976 4.334 12.25 C 4.334 16.527 7.692 19.994 11.835 19.994 C 15.979 19.994 19.336 16.527 19.336 12.25 C 19.336 7.976 15.979 4.508 11.835 4.508 Z M 3.18 12.25 C 3.18 7.316 7.054 3.317 11.835 3.317 C 16.615 3.317 20.49 7.316 20.49 12.25 C 20.49 17.185 16.615 21.186 11.835 21.186 C 7.054 21.186 3.18 17.185 3.18 12.25 Z"
+        android:fillColor="#b1701b"
+        android:strokeWidth="1"
+        android:fillType="evenOdd"/>
+    <path
+        android:name="path_4"
+        android:pathData="M 11.692 6.51 L 12.997 10.104 L 16.972 10.182 L 13.804 12.481 L 14.955 16.123 L 11.692 13.95 L 8.429 16.123 L 9.58 12.481 L 6.412 10.182 L 10.387 10.104 Z"
+        android:fillColor="#d8d8d8"
+        android:strokeColor="#b1701b"
+        android:strokeWidth="1"/>
+</vector>

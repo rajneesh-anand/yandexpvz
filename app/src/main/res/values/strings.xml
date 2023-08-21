@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Яша</string>
+      <string name="generic_error">Something wrong happened. Please try again.</string>
+    <string name="sign_in">Войти</string>
+    <string name="sign_out">Выход</string>
+    <string name="login_details">Enter your login details</string>
+    <string name="forgot_password">Forgot password? Click to get recovery email</string>
+    <string name="recovery_email_sent">Check your inbox for the recovery email.</string>
+    <string name="empty_password_error">Password cannot be empty.</string>
+    <string name="name_placeholder">Полное имя</string>
+    <string name="email_placeholder">Электронная почта</string>
+    <string name="password_placeholder">Пароль</string>
+    <string name="mobile_placeholder">Мобильный телефон</string>
+    <string name="name_label">Полное имя</string>
+    <string name="email_label">Электронная почта</string>
+    <string name="password_label">Пароль</string>
+    <string name="password_label_new">Создать новый пароль</string>
+    <string name="mobile_label">Мобильный телефон</string>
+    <string name="name_error">Поле имени обязательно!</string>
+    <string name="email_error">Электронная почта неверна!</string>
+    <string name="password_error">Длина пароля должна быть не менее 8 символов и хотя бы один заглавный алфавит (латиница)!</string>
+    <string name="mobile_error">Мобильный номер указан неверно!</string>
+    <string name="no_account">У вас нет аккаунта?</string>
+    <string name="sign_up">Завести аккаунт</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="splash_one_text_one">Получайте вознаграждение </string>
+    <string name="splash_one_text_two">за каждую покупку на </string>
+    <string name="splash_one_text_three">Яндекс Маркете</string>
+    <string name="further">Дальше</string>
+    <string name="redeem">Redeem</string>
+    <string name="cancel">Отмена</string>
+    <string name="yes">Да</string>
+    <string name="locked">Заблокировано</string>
+    <string name="redeem_dialog_message">Вы хотите выкупить свои монеты?</string>
+    <string name="signin_with_mobile">Войдите под своим номером мобильного телефона и паролем</string>
+    <string name="sign_up_with_mobile">Заполните форму, чтобы создать учетную запись</string>
+    <string name="password_change">Измените свой пароль</string>
+    <string name="update_password">Обновить пароль</string>
+    <string name="how_to_earn_coin">Как заработать награды?</string>
+    <string name="redeem_now">Выкупать</string>
+    <string name="profile_updated">Профиль обновлен</string>
+    <string name="redeem_msg_one">Поздравляем! Ваш подарок будет готов в течение 2 рабочих дней. Вы получите SMS или телефонный звонок на зарегистрированный номер мобильного телефона.</string>
+    <string name="shop_address">Саратов, 2-й Магнитный проезд, д. 6</string>
+    <string name="contact_us">Если у вас есть вопросы? Свяжитесь с нами по указанному ниже адресу</string>
+    <string name="address">Адрес</string>
+    <string name="conatct_number">Контактный номер</string>
+    <string name="mobile_number">+7 985 547 2776</string>
+    <string name="welcome_1_title">Покупайте товары на Яндекс Маркетплейс</string>
+    <string name="welcome_2_title">Зарабатывать награды</string>
+    <string name="welcome_3_title">Выигрывай подарки</string>
+    <string name="welcome_1_desc">Выбирайте "Саратов, 2-й Магнитный проезд, д. 6" Яндекс ПВЗ при покупке товаров на Яндекс Маркетплейс</string>
+    <string name="welcome_2_desc">Получайте вознаграждение за каждую покупку на Яндекс Маркетплейс.</string>
+    <string name="welcome_3_desc">Погасите свои награды с захватывающими подарками</string>
+    <string name="profile">Профиль</string>
+    <string name="update_profile">Обновить профиль</string>
+    <string name="gifts">Подарки и награды</string>
+    <!-- FCM -->
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="request_notification_permission">Запрос на разрешение</string>
+    <string name="notification_permission_title">разрешение необходимо для уведомления</string>
+    <string name="notification_permission_description">Разрешение на уведомление важно для этого приложения. Пожалуйста, дайте разрешение.</string>
+    <string name="notification_permission_settings">The notification permission is important for this app. Please navigate to your device settings and enable notifications for Make it So.</string>
+
+</resources>
