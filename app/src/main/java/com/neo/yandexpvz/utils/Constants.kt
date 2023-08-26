@@ -13,7 +13,6 @@ object Constants {
     const val USER_IMAGE= "user_image"
     const val FCM_TOKEN= "fcm_token"
 
-
     //Topics
     const val USER_NOTIFICATION_TOPIC = "yandexpvz"
 

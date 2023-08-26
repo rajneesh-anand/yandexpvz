@@ -54,6 +54,7 @@
     <string name="profile">Профиль</string>
     <string name="update_profile">Обновить профиль</string>
     <string name="gifts">Подарки и награды</string>
+    <string name="coming_soon">Товар скоро будет доступен !</string>
     <!-- FCM -->
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="request_notification_permission">Запрос на разрешение</string>

@@ -155,7 +155,7 @@ fun ProductScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Text(
-                                text = productsInfo.value?.title.toString(),
+                                text = productsInfo.value?.name.toString(),
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )

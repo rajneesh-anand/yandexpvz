@@ -1,9 +1,7 @@
 package com.neo.yandexpvz.api
 
 import com.neo.yandexpvz.model.CoinList
-import com.neo.yandexpvz.model.CommonResponse
 import com.neo.yandexpvz.model.GiftCardResponse
-import com.neo.yandexpvz.model.Product
 import com.neo.yandexpvz.model.ProductList
 import com.neo.yandexpvz.model.ProductResponse
 import com.neo.yandexpvz.model.RedeemRequest
@@ -33,7 +31,7 @@ interface RestApi {
     ) : Response<CoinList>
 
 
-    @GET("product/all-products")
+    @GET("product/products-list")
     suspend fun fetchAllProducts(): Response<ProductList>
 
     @GET("user/gifts/{mobileId}")
@@ -74,9 +72,9 @@ interface RestApi {
     ): Response<UserUpdateResponse>
 
 
-    @POST("user/fcm/token")
-    suspend fun fcmToken(@Body token: String) : Response<CommonResponse>
-
+//    @POST("user/fcm/token")
+//    suspend fun fcmToken(@Body token: String) : Response<CommonResponse>
+//
 
 
 }

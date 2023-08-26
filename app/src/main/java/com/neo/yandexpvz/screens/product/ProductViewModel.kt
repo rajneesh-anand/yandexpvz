@@ -79,8 +79,8 @@ class ProductViewModel @Inject constructor(
             try {
                 when (val response =
                     productRepository.redeemCoins(RedeemRequest(
-                        email,mobile,name,_productInfo.value?.price.toString(),
-                        _productInfo.value!!.title,_productInfo.value?.price.toString()
+                        email,mobile,name,_productInfo.value?.coinValue.toString(),
+                        _productInfo.value!!.name,_productInfo.value?.coinValue.toString()
                        ))) {
                     is NetworkResult.Success -> {
                         coinRepository.insertCoins(mobile)

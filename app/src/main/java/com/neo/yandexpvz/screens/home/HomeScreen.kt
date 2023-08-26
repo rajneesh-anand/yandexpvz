@@ -41,6 +41,7 @@ import com.neo.yandexpvz.internet.ConnectionState
 import com.neo.yandexpvz.internet.connectivityState
 import com.neo.yandexpvz.model.Product
 import com.neo.yandexpvz.ui.theme.BlueText
+import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.ui.theme.OrangeLightColor
 import com.neo.yandexpvz.ui.theme.TextColor
 
@@ -249,9 +250,9 @@ fun ProductItem(
 
 
 
-    Row(modifier = Modifier.padding(all = 8.dp)) {
-
-
+    Row( modifier = Modifier.fillMaxWidth()
+        .padding(all= 8.dp),
+       ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(item.image)
@@ -263,235 +264,81 @@ fun ProductItem(
             contentScale = ContentScale.FillBounds,
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+//        Spacer(modifier = Modifier.width(8.dp))
 
         Column(
-            modifier = Modifier
-                .clickable(onClick = { onProductClick(item.id) })
-                .padding(8.dp)
+            modifier = Modifier.padding(start = 8.dp)
+                .clickable(onClick = { onProductClick(item.id) }),
+
+
         ) {
 
-
-            TextButton( onClick = { viewModel.onProductClick(openScreen,item) }){
+            if(item.inStock > 0) {
+                TextButton(onClick = { viewModel.onProductClick(openScreen, item) }) {
+                    Text(
+                        text = item.name,
+                        style = MaterialTheme.typography.subtitle1,
+                        color = MaterialTheme.colors.TextColor,
+                        modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
+                    )
+                }
+            }else{
                 Text(
-                    text = item.title,
+                    text = item.name,
                     style = MaterialTheme.typography.subtitle1,
                     color = MaterialTheme.colors.TextColor,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 )
             }
-
             Spacer(modifier = Modifier.height(4.dp))
             Row ( modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 0.dp),
+                .padding(horizontal = 8.dp, vertical = 0.dp),
                 verticalAlignment = Alignment.CenterVertically,
-
                 ){
-                Text(text = item.price.toString())
-                Icon(
-                    painter = painterResource(R.drawable.coin),
-                    contentDescription = "gold-coins",
-                    tint = Color.Unspecified
-                )
-                Spacer(
-                    Modifier
-                        .weight(1f)
-                        .fillMaxWidth())
-
-                if(balancedCoin > item.price) {
-                    TextButton( onClick = { viewModel.onProductClick(openScreen,item) }){
-
-                        Icon(
-                            painterResource(R.drawable.unlock),
-                            contentDescription = "Favorite",
-                            modifier = Modifier.size(ButtonDefaults.IconSize),
-                            tint = Color.Unspecified
-                        )
-                        Spacer(modifier=Modifier.width(4.dp))
-                        Text(text= stringResource(id = R.string.redeem_now), color = MaterialTheme.colors.BlueText)
 
 
-                    }
-//                    OutlinedButton(
-//                        onClick = { viewModel.onProductClick(openScreen,item) },
-//                        shape = RoundedCornerShape(1.dp),
-//                        border = BorderStroke(1.dp, MaterialTheme.colors.OrangeDarkColor),
-//
-//                        ) {
-//                        Icon(
-//                            painterResource(R.drawable.unlock),
-//                            contentDescription = "Favorite",
-//                            modifier = Modifier.size(ButtonDefaults.IconSize),
-//                            tint = Color.Unspecified
-//                        )
-//                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-//                        Text(text= stringResource(id = R.string.redeem_now), color = MaterialTheme.colors.BlueText)
-//                    }
-                }else{
-//                    OutlinedButton(
-//                        onClick = { /* ... */ },
-//                        shape = RoundedCornerShape(1.dp),
-//                        border = BorderStroke(1.dp, MaterialTheme.colors.OrangeDarkColor),
-//
-//                        ) {
-//                        Icon(
-//                            painterResource(R.drawable.lock),
-//                            contentDescription = "Favorite",
-//                            modifier = Modifier.size(ButtonDefaults.IconSize),
-//                            tint = Color.Unspecified
-//                        )
-//                        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-//                        Text(text= stringResource(id = R.string.locked), color = MaterialTheme.colors.OrangeDarkColor)
-//
-//                    }
-
-
-
+                if(item.inStock > 0) {
+                    Text(text = item.coinValue.toString())
                     Icon(
+                        painter = painterResource(R.drawable.coin),
+                        contentDescription = "gold-coins",
+                        tint = Color.Unspecified
+                    )
+                    Spacer(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxWidth())
+                    if(balancedCoin > item.coinValue) {
+                        TextButton( onClick = { viewModel.onProductClick(openScreen,item) }){
+                            Icon(
+                                painterResource(R.drawable.unlock),
+                                contentDescription = "Favorite",
+                                modifier = Modifier.size(ButtonDefaults.IconSize),
+                                tint = Color.Unspecified
+                            )
+                            Spacer(modifier=Modifier.width(4.dp))
+                            Text(text= stringResource(id = R.string.redeem_now), color = MaterialTheme.colors.BlueText)
+                        }
+                    }else {
+                        Icon(
                             painterResource(R.drawable.lock),
                             contentDescription = "Favorite",
                             modifier = Modifier.size(ButtonDefaults.IconSize),
                             tint = Color.Unspecified
                         )
-
-
+                    }
+                }else{
+                    Text(
+                        text = stringResource(id = R.string.coming_soon),
+                        style = TextStyle(
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        color = MaterialTheme.colors.OrangeDarkColor,
+                    )
                 }
-
-
             }
-
-
-
-
-
-
-
-           
         }
-
     }
 }
-
-//
-//@Composable
-//fun ProductImage(
-//    imageUrl: String,
-//    contentDescription: String?,
-//    modifier: Modifier = Modifier,
-//    elevation: Dp = 0.dp
-//) {
-//    YandexSurface(
-//        color = Color.LightGray,
-//        elevation = elevation,
-//       shape = CircleShape,
-//        modifier = modifier
-//    ) {
-//        AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(imageUrl)
-//                .crossfade(true)
-//                .build(),
-//            contentDescription = contentDescription,
-//            placeholder = painterResource(R.drawable.product_placeholder),
-//            modifier = Modifier.fillMaxSize(),
-//            contentScale = ContentScale.FillBounds,
-//        )
-//    }
-//}
-//
-//
-//
-//@Composable
-//fun AppBar(
-//    profileAction: () -> Unit,
-//    signOutAction :() -> Unit
-//) {
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 15.dp, end = 15.dp, top = 4.dp, bottom = 4.dp),
-//            horizontalArrangement = Arrangement.End
-//        ) {
-////            TextField(
-////                value = "",
-////                onValueChange = { },
-////                singleLine = true,
-////                placeholder = { Text(text = "Search product") },
-////                leadingIcon = {
-////                    Icon(
-////                        painter = painterResource(id = R.drawable.search_icon),
-////                        contentDescription = "Product Search Icon"
-////                    )
-////                },
-////                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text),
-////                colors = TextFieldDefaults.outlinedTextFieldColors(
-////                    focusedBorderColor = Color.Transparent,
-////                    unfocusedBorderColor = Color.Transparent,
-////                    cursorColor = MaterialTheme.colors.OrangeColor
-////                ),
-////                modifier = Modifier
-////                    .background(
-////                        color = MaterialTheme.colors.OrangeLightColor,
-////                        shape = RoundedCornerShape(20.dp)
-////                    )
-////                    .weight(1f),
-////
-////                )
-//
-//            Box(
-//                modifier = Modifier
-//                    .size(48.dp)
-//                    .clip(CircleShape)
-//                    .background(MaterialTheme.colors.OrangeLightColor)
-//                    .clickable {
-//                        profileAction()
-//                    },
-//                contentAlignment = Alignment.Center
-//            ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.profile),
-//                    contentDescription = "Cart Icon"
-//                )
-//            }
-//            ConstraintLayout {
-//                val (notification, notificationCounter) = createRefs()
-//
-//                Box(
-//                    modifier = Modifier
-//                        .size(48.dp)
-//                        .clip(CircleShape)
-//                        .background(MaterialTheme.colors.OrangeLightColor)
-//                        .constrainAs(notification) {}
-//                        .clickable {
-//                            signOutAction()
-//                        },
-//
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    Image(
-//                        painter = painterResource(id = R.drawable.log_out),
-//                        contentDescription = "Notification Icon"
-//                    )
-//
-//                }
-//
-//
-//            }
-//
-//
-//        }
-//    }
-//
-
-//
-//@ExperimentalCoroutinesApi
-//@Composable
-//fun rememberConnectivityState(): State<NetworkConnectionState> {
-//    val context = LocalContext.current
-//    return produceState(initialValue = context.currentConnectivityState) {
-//        context.observeConnectivityAsFlow().collect {
-//            value = it
-//        }
-//    }
-//}
