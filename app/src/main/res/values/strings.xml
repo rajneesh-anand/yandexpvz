@@ -61,5 +61,6 @@
     <string name="notification_permission_title">разрешение необходимо для уведомления</string>
     <string name="notification_permission_description">Разрешение на уведомление важно для этого приложения. Пожалуйста, дайте разрешение.</string>
     <string name="notification_permission_settings">The notification permission is important for this app. Please navigate to your device settings and enable notifications for Make it So.</string>
+    <string name="no_sufficient_coins">У вас недостаточно монет !</string>
 
 </resources>

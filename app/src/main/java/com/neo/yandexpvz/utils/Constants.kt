@@ -2,7 +2,7 @@ package com.neo.yandexpvz.utils
 
 object Constants {
 
- const val BASE_URL = "http://194.67.90.60/api/"
+    const val BASE_URL = "http://185.46.11.105:8800/api/"
 //  const val BASE_URL = "http://10.0.2.2:8800/api/"
 
     const val PREFS_TOKEN_FILE = "prefs_file"

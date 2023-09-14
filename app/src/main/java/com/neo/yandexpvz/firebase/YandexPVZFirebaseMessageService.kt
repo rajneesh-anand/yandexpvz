@@ -116,8 +116,7 @@ class YandexPVZFirebaseMessageService : FirebaseMessagingService() {
         // FCM registration token to your app server.
         super.onNewToken(token)
         GlobalScope.launch { saveFCMToken(token) }
-        Log.d("FCM-TOKEN","New token: $token")
-//        tokenManager.fcmToken(token)
+
 
 
 

@@ -28,6 +28,8 @@ class ProductViewModel @Inject constructor(
     private val tokenManager: TokenManager,
 ): ViewModel() {
 
+    val balancedCoins = coinRepository.balancedCoins
+
     var isLoading: Boolean by mutableStateOf(false)
     var errorText: String by mutableStateOf("")
     var redeemID: String by mutableStateOf("")

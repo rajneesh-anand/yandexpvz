@@ -278,6 +278,7 @@ fun ProductItem(
                     Text(
                         text = item.name,
                         style = MaterialTheme.typography.subtitle1,
+                        fontWeight = FontWeight.SemiBold,
                         color = MaterialTheme.colors.TextColor,
                         modifier = Modifier.padding(top = 4.dp, bottom = 2.dp)
                     )
@@ -286,6 +287,7 @@ fun ProductItem(
                 Text(
                     text = item.name,
                     style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colors.TextColor,
                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                 )

@@ -1,5 +1,6 @@
 package com.neo.yandexpvz.screens.product
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -72,6 +73,7 @@ fun ProductScreen(
 
 ) {
     val networkConnectivity by connectivityState()
+    val balancedCoin = viewModel.balancedCoins.observeAsState()
     val productsInfo = viewModel.productInfo.observeAsState()
     LaunchedEffect(Unit) { viewModel.initialize(productId) }
     LaunchedEffect(viewModel.redeemMessage) {
@@ -88,6 +90,9 @@ fun ProductScreen(
 //            CircularProgressIndicator()
 //        }
 //    }
+
+    Log.d("BALANCED-COIN" , "${balancedCoin.value}")
+
     if(networkConnectivity == ConnectionState.Unavailable) {
         InternetConnectionError()
     }else {
@@ -110,7 +115,10 @@ fun ProductScreen(
                             restartApp(HOME_SCREEN)
                         },
                         modifier = Modifier
-                            .background(color = MaterialTheme.colors.OrangeLightColor, shape = CircleShape)
+                            .background(
+                                color = MaterialTheme.colors.OrangeLightColor,
+                                shape = CircleShape
+                            )
                             .clip(CircleShape)
 
                     ) {
@@ -137,7 +145,7 @@ fun ProductScreen(
                         .fillMaxWidth()
                         .fillMaxHeight()
                         .background(
-                          color= MaterialTheme.colors.OrangeLightColor,
+                            color = MaterialTheme.colors.OrangeLightColor,
                             shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
                         )
 
@@ -166,10 +174,22 @@ fun ProductScreen(
                                 color = MaterialTheme.colors.TextColor
                             )
                             Spacer(modifier = Modifier.height(25.dp))
-                            RedeemCard { viewModel.onRedeemCoin() }
 
+                            if(productsInfo.value?.coinValue != null){
+
+                                if (balancedCoin.value!! >= productsInfo.value?.coinValue!! ) {
+                                  RedeemCard { viewModel.onRedeemCoin() }
+                                }else{
+                                    Text(
+                                        text = stringResource(R.string.no_sufficient_coins),
+                                        color = MaterialTheme.colors.OrangeDarkColor,
+                                        fontWeight = FontWeight.SemiBold,
+                                        fontSize = 24.sp,
+
+                                    )
+                                 }
+                            }
                         }
-
                     }
                 }
             }
