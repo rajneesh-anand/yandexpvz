@@ -3,7 +3,6 @@ package com.neo.yandexpvz
 import android.Manifest
 import android.content.res.Resources
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
@@ -19,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -44,7 +44,6 @@ import com.neo.yandexpvz.screens.home.HomeScreen
 import com.neo.yandexpvz.screens.product.ProductScreen
 import com.neo.yandexpvz.screens.signin.SignInScreen
 import com.neo.yandexpvz.screens.signup.SignUpScreen
-import com.neo.yandexpvz.ui.theme.OrangeColor
 import com.neo.yandexpvz.ui.theme.YandexTheme
 import kotlinx.coroutines.CoroutineScope
 import com.neo.yandexpvz.screens.gift.GiftScreen
@@ -53,10 +52,11 @@ import com.neo.yandexpvz.screens.info.InfoScreen
 import com.neo.yandexpvz.screens.map.MapScreen
 import com.neo.yandexpvz.screens.password.PasswordScreen
 import com.neo.yandexpvz.screens.profile.ProfileScreen
+import com.neo.yandexpvz.screens.profileinfo.ProfileInfoScreen
 import com.neo.yandexpvz.screens.redeem.RedeemScreen
 import com.neo.yandexpvz.screens.splash.SplashScreen
 import com.neo.yandexpvz.screens.welcome.WelcomeScreen
-import com.neo.yandexpvz.ui.theme.BlueText
+import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.utils.Constants.USER_NOTIFICATION_TOPIC
 
 @ExperimentalAnimationApi
@@ -66,12 +66,10 @@ fun YandexApp() {
     YandexTheme {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             RequestNotificationPermissionDialog()
-        //            subscribeTopics()
         }
         subscribeTopics()
-        Surface(color = MaterialTheme.colors.background) {
+        Surface() {
             val appState = rememberAppState()
-
             Scaffold(
                 snackbarHost = {
                     SnackbarHost(
@@ -81,14 +79,20 @@ fun YandexApp() {
                             Snackbar(
                                 snackbarData,
                                 backgroundColor = Color.White,
-                                contentColor = MaterialTheme.colors.BlueText,
+                                contentColor = MaterialTheme.colors.OrangeDarkColor,
+
                             )
                         }
                     )
                 },
                 scaffoldState = appState.scaffoldState,
+//                drawerGesturesEnabled = appState.scaffoldState.drawerState.isOpen,
+//                drawerContent = {
+//                    NavigationDrawerHeader()
+//                    NavigationDrawerBody(appState.navController)
+//                },
                 bottomBar = {
-                        BottomNavigationBar(appState.navController)
+                        BottomNavigationBar(appState.navController, appState.scaffoldState,)
                 }
             ) { innerPaddingModifier ->
                 NavHost(
@@ -117,16 +121,12 @@ fun rememberAppState(
         YandexAppState(scaffoldState, navController, snackbarManager, resources, coroutineScope)
     }
 
-
-
-
 @Composable
 @ReadOnlyComposable
 fun resources(): Resources {
     LocalConfiguration.current
     return LocalContext.current.resources
 }
-
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
 @ExperimentalMaterialApi
@@ -159,8 +159,11 @@ fun NavGraphBuilder.yandexAppGraph(appState: YandexAppState) {
     }
     composable(PROFILE_SCREEN) {
         ProfileScreen(
-            openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) },
             restartApp = { route -> appState.clearAndNavigate(route) })
+    }
+    composable(PROFILE_INFO_SCREEN) {
+        ProfileInfoScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+
     }
     composable(INFO_SCREEN) {
         InfoScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
@@ -178,7 +181,6 @@ fun NavGraphBuilder.yandexAppGraph(appState: YandexAppState) {
         arguments = listOf(navArgument(PRODUCT_ID) { defaultValue = PRODUCT_DEFAULT_ID })
     ) {
         ProductScreen(
-//            openScreen = { route -> appState.navigate(route) },
             restartApp = { route -> appState.clearAndNavigate(route) },
             openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) },
             productId = it.arguments?.getString(PRODUCT_ID) ?: PRODUCT_DEFAULT_ID

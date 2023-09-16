@@ -9,25 +9,25 @@ import com.neo.yandexpvz.R
 
 sealed class BottomNavItem(val tittle: String, val icon: Int, val route: String) {
     object HomeNav : BottomNavItem(
-        tittle = "Home",
+        tittle = "Продукты",
         icon = R.drawable.shop_icon,
         route = HOME_SCREEN
     )
     object GiftCardNav : BottomNavItem(
-        tittle = "Gift Card",
+        tittle = "Дары",
         icon = R.drawable.gift_icon,
         route = GIFT_SCREEN
     )
 
     object LocationNav : BottomNavItem(
-        tittle = "Location",
+        tittle = "Расположение",
         icon = R.drawable.location,
         route = MAP_SCREEN
     )
 
 
     object ProfileNav : BottomNavItem(
-        tittle = "Profile",
+        tittle = "Профиль",
         icon = R.drawable.profile,
         route = PROFILE_SCREEN
     )

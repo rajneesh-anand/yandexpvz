@@ -1,166 +1,92 @@
 package com.neo.yandexpvz.screens.profile
-
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.neo.yandexpvz.BuildConfig
-import com.neo.yandexpvz.HOME_SCREEN
-import com.neo.yandexpvz.PROFILE_SCREEN
 import com.neo.yandexpvz.R
-import com.neo.yandexpvz.components.CustomDefaultBtn
-import com.neo.yandexpvz.components.DefaultBackArrow
-import com.neo.yandexpvz.components.ErrorSuggestion
-import com.neo.yandexpvz.ui.theme.OrangeColor
+import com.neo.yandexpvz.screens.home.DrawerNavItem
 import com.neo.yandexpvz.ui.theme.OrangeDarkColor
-import com.neo.yandexpvz.ui.theme.TextColor
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Objects
 
-
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 @ExperimentalMaterialApi
 fun ProfileScreen(
-    openAndPopUp: (String,String) -> Unit,
     restartApp: ( String) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 
 ) {
-    val context = LocalContext.current
-    val nameErrorState = remember {
-        mutableStateOf(false)
-    }
-//    val defaultImage = getBitmapFromImage(context, R.drawable.profile_image)
-//    val result = remember { mutableStateOf<Bitmap?>(defaultImage) }
 
-
-
-    val file = context.createImageFile()
-    val uri = FileProvider.getUriForFile(
-        Objects.requireNonNull(context),
-        BuildConfig.APPLICATION_ID + ".provider", file
+    val navItemList = listOf(
+        DrawerNavItem.HomeNav,
+        DrawerNavItem.GiftCardNav,
+        DrawerNavItem.LocationNav,
+        DrawerNavItem.ProfileNav,
+        DrawerNavItem.ProfileInfoNav,
+        DrawerNavItem.SignOutNav,
     )
-
-    var capturedImageUri by remember {
-        mutableStateOf<Uri>(Uri.EMPTY)
+    val rainbowColorsBrush = remember {
+        Brush.sweepGradient(
+            listOf(
+                Color(0xFFFFC107),
+                Color(0xFFE91E63),
+                Color(0xFFE57373),
+                Color(0xFFFFB74D),
+                Color(0xFFFFF176),
+                Color(0xFFDDB027),
+                Color(0xFFEE5524),
+                Color(0xFFFFF176)
+            )
+        )
     }
 
-
-    val result = remember { mutableStateOf<Bitmap?>(null) }
-    var photoFile:File? =  null
-
-    val loadImage = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()){
-        val source = ImageDecoder.createSource(context.contentResolver, it!!)
-        result.value= ImageDecoder.decodeBitmap(source)
-       photoFile = createTemoraryFile(context.contentResolver.openInputStream(it),context)
-//        capturedImageUri = it
-    }
-
-
-
-
-
-
-
-//    val filesDir = context.filesDir
-//    val file = File(filesDir,"image.png")
-//    val stream: OutputStream = FileOutputStream(file)
-//    result.value?.compress(Bitmap.CompressFormat.PNG,50,stream)
-//    stream.flush()
-//    stream.close()
-
-
-//
-//    val loadImage = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()){
-//        val source = ImageDecoder.createSource(context.contentResolver, it!!)
-//        val imageValue= ImageDecoder.decodeBitmap(source)
-//        val filesDir = context.filesDir
-//        val file = File(filesDir,"image.png")
-//        val stream: OutputStream = FileOutputStream(file)
-//        imageValue.compress(Bitmap.CompressFormat.PNG,50,stream)
-//        stream.flush()
-//        stream.close()
-//    }
-//
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp)
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 20.dp),
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(modifier = Modifier.weight(0.5f)) {
-                DefaultBackArrow {
-                    openAndPopUp(HOME_SCREEN, PROFILE_SCREEN)
-                }
-            }
-            Box(modifier = Modifier.weight(0.7f)) {
+
+        stickyHeader {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Text(
                     text = stringResource(id = R.string.profile),
                     color = MaterialTheme.colors.OrangeDarkColor,
@@ -169,285 +95,100 @@ fun ProfileScreen(
                 )
             }
         }
-
-        Spacer(modifier = Modifier.height(30.dp))
-        ConstraintLayout(
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            val (image, cameraIcon) = createRefs()
-
-            if(result.value != null){
-                result.value?.let {
-                    Image(
-                        bitmap = it.asImageBitmap(),
-                        contentDescription = "Profile Image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(168.dp)
-                            .clip(CircleShape)
-                            .constrainAs(image) {
-                                linkTo(start = parent.start, end = parent.end)
-                            }
-                    )
-                }
-
-            }else{
+        item {
+            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            )
+            {
                 AsyncImage(
                     model = viewModel.userImage,
-                    contentDescription = "profile image",
+                    contentDescription = "Profile Image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(168.dp)
+                        .size(112.dp)
+                        .border(
+                            BorderStroke(4.dp, rainbowColorsBrush),
+                            CircleShape
+                        )
+                        .padding(4.dp)
                         .clip(CircleShape)
-                        .constrainAs(image) {
-                            linkTo(start = parent.start, end = parent.end)
-                        }
                 )
-            }
-            Box(contentAlignment = Alignment.Center, modifier = Modifier.constrainAs(cameraIcon) {
-                bottom.linkTo(image.bottom)
-                end.linkTo(image.end)
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = viewModel.name,
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
+                    ),
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = viewModel.email,
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                if(viewModel.mobile.isNotEmpty()) {
 
-            }) {
-
-                IconButton(onClick = { loadImage.launch("image/*") }) {
-                    Icon(
-                        painter = painterResource(R.drawable.camera_icon),
-                        contentDescription = "Change Picture",
-                        modifier = Modifier.background(Color.LightGray)
+                    Text(
+                        text = "+7 ".plus(" ").plus(viewModel.mobile.subSequence(0, 3)).plus(" ")
+                            .plus(viewModel.mobile.subSequence(3, 6)).plus("-")
+                            .plus(viewModel.mobile.subSequence(6, 10)),
+                        style = TextStyle(
+                            fontSize = 18.sp,
+                            color = Color.DarkGray,
+                            letterSpacing = (0.8).sp,
+                            fontWeight = FontWeight.Medium
+                        ),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
+
+
+
+
+            Spacer(modifier = Modifier.height(32.dp))
         }
-        Spacer(modifier = Modifier.height(60.dp))
 
-        OutlinedTextField(
-            value = viewModel.name,
-            onValueChange = { username -> viewModel.updateName(username) },
-            label = { Text(stringResource(R.string.name_label)) },
-            singleLine = true,
-            shape = RoundedCornerShape(1.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                cursorColor = MaterialTheme.colors.OrangeColor,
-                focusedBorderColor = MaterialTheme.colors.OrangeColor,
-                focusedLabelColor = MaterialTheme.colors.OrangeColor,
-                unfocusedBorderColor = MaterialTheme.colors.OrangeColor,
-                unfocusedLabelColor = MaterialTheme.colors.OrangeColor,
-                textColor = MaterialTheme.colors.TextColor
-            ),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.user),
-                    contentDescription = "text", tint = Color.Unspecified
-                )},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            isError = nameErrorState.value,
-            modifier = Modifier
+        items(navItemList) { item ->
+            Row ( modifier = Modifier
                 .fillMaxWidth()
-        )
-
-        if (nameErrorState.value ) {
-            Spacer(modifier = Modifier.height(4.dp))
-            ErrorSuggestion(stringResource(R.string.name_error))
-        }
-        Spacer(modifier = Modifier.height(12.dp))
-        OutlinedTextField(
-            value = viewModel.mobile,
-            onValueChange = { },
-            readOnly = true,
-            label = { Text(stringResource(R.string.mobile_label)) },
-            singleLine = true,
-            shape = RoundedCornerShape(1.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                cursorColor = MaterialTheme.colors.OrangeColor,
-                focusedBorderColor = MaterialTheme.colors.OrangeColor,
-                focusedLabelColor = MaterialTheme.colors.OrangeColor,
-                unfocusedBorderColor = MaterialTheme.colors.OrangeColor,
-                unfocusedLabelColor = MaterialTheme.colors.OrangeColor,
-                textColor = MaterialTheme.colors.TextColor
-            ),
-            leadingIcon = {
+                .padding(bottom = 8.dp)
+                .clickable {
+                    viewModel.onNavItemClick(restartApp, item.route)
+                 },
+                verticalAlignment = Alignment.CenterVertically,
+                ){
                 Icon(
-                    painter = painterResource(R.drawable.mobile),
-                    contentDescription = "text", tint = Color.Unspecified
-                )},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            visualTransformation = PhoneVisualTransformation(
-                "+7 000 000 00-00",
-                '0'
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+                    painter = painterResource(item.icon),
+                    contentDescription = null,
+                    tint = Color.Unspecified
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = item.tittle,
+                    color = Color.Gray,
+                    fontSize = 20.sp,
+                )
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = viewModel.email,
-            onValueChange = {  },
-            readOnly = true,
-            label = { Text(stringResource(R.string.email_label)) },
-            singleLine = true,
-            shape = RoundedCornerShape(1.dp),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                cursorColor = MaterialTheme.colors.OrangeColor,
-                focusedBorderColor = MaterialTheme.colors.OrangeColor,
-                focusedLabelColor = MaterialTheme.colors.OrangeColor,
-                unfocusedBorderColor = MaterialTheme.colors.OrangeColor,
-                unfocusedLabelColor = MaterialTheme.colors.OrangeColor,
-                textColor = MaterialTheme.colors.TextColor
-            ),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.email),
-                    contentDescription = "text", tint = Color.Unspecified
-                )},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-
-
-        CustomDefaultBtn(shapeSize = 40f, btnText = R.string.update_profile) {
-            val isNameValid = viewModel.name.isNullOrBlank()
-            nameErrorState.value = isNameValid
-
-            if (!isNameValid) {
-                if(result.value != null) {
-                    Log.d("PROFILE SCREEN IF","IF")
-                   viewModel.updateProfile(photoFile)
-//                    viewModel.updateProfile(file)
-                }else{
-                    Log.d("PROFILE SCREEN ELSE","ELSE")
-                    viewModel.updateProfile(null)
-                }
             }
+            Divider (
+                color = Color.Gray,
+                modifier = Modifier
+                    .height(1.dp)
+                    .fillMaxWidth()
+            )
+            Spacer(Modifier.height(4.dp))
+
         }
-
-        CustomDefaultBtn(shapeSize = 40f, btnText = R.string.sign_out){
-            viewModel.onSignOutClick(restartApp)
-        }
-
-        if (viewModel.isLoading) {
-            CircularProgressIndicator(color = MaterialTheme.colors.OrangeDarkColor)
-        }
-
-
-
     }
 }
 
 
-
-fun createTemoraryFile(iStream: InputStream?, context:Context): File {
-    val inputStream = iStream
-    val file = context.createImageFile()
-
-//
-//    val f = createTempFile(
-//        directory = context.cacheDir
-//    )
-    if (inputStream != null) {
-        inputStream.copyTo(file.outputStream())
-    }
-    return file
-}
-
-private fun getBitmapFromImage(context: Context, drawable: Int): Bitmap {
-
-    // on below line we are getting drawable
-    val db = ContextCompat.getDrawable(context, drawable)
-
-    // in below line we are creating our bitmap and initializing it.
-    val bit = Bitmap.createBitmap(
-        db!!.intrinsicWidth, db.intrinsicHeight, Bitmap.Config.ARGB_8888
-    )
-
-    // on below line we are
-    // creating a variable for canvas.
-    val canvas = Canvas(bit)
-
-    // on below line we are setting bounds for our bitmap.
-    db.setBounds(0, 0, canvas.width, canvas.height)
-
-    // on below line we are simply
-    // calling draw to draw our canvas.
-    db.draw(canvas)
-
-    // on below line we are
-    // returning our bitmap.
-    return bit
-}
-
-class PhoneVisualTransformation(val mask: String, val maskNumber: Char) : VisualTransformation {
-
-    private val maxLength = mask.count { it == maskNumber }
-
-    override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed = if (text.length > maxLength) text.take(maxLength) else text
-
-        val annotatedString = buildAnnotatedString {
-            if (trimmed.isEmpty()) return@buildAnnotatedString
-
-            var maskIndex = 0
-            var textIndex = 0
-            while (textIndex < trimmed.length && maskIndex < mask.length) {
-                if (mask[maskIndex] != maskNumber) {
-                    val nextDigitIndex = mask.indexOf(maskNumber, maskIndex)
-                    append(mask.substring(maskIndex, nextDigitIndex))
-                    maskIndex = nextDigitIndex
-                }
-                append(trimmed[textIndex++])
-                maskIndex++
-            }
-        }
-
-        return TransformedText(annotatedString, PhoneOffsetMapper(mask, maskNumber))
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is PhoneVisualTransformation) return false
-        if (mask != other.mask) return false
-        if (maskNumber != other.maskNumber) return false
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return mask.hashCode()
-    }
-}
-
-private class PhoneOffsetMapper(val mask: String, val numberChar: Char) : OffsetMapping {
-
-    override fun originalToTransformed(offset: Int): Int {
-        var noneDigitCount = 0
-        var i = 0
-        while (i < offset + noneDigitCount) {
-            if (mask[i++] != numberChar) noneDigitCount++
-        }
-        return offset + noneDigitCount
-    }
-
-    override fun transformedToOriginal(offset: Int): Int =
-        offset - mask.take(offset).count { it != numberChar }
-
-
-}
-
-
-fun Context.createImageFile(): File {
-    // Create an image file name
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-    val imageFileName = "JPEG_" + timeStamp + "_"
-    val image = File.createTempFile(
-        imageFileName, /* prefix */
-        ".jpg", /* suffix */
-        externalCacheDir      /* directory */
-    )
-    return image
-}

@@ -82,7 +82,7 @@ fun InfoScreen(
                    withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.SemiBold)) {
                        append("Пункт выдачи ")
                    }
-                   append("при покупке товаров на ")
+                   append("при покупке товаров на")
 
                    withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.SemiBold)) {
                        append("маркетплейсе Яндекс")
@@ -132,11 +132,12 @@ fun InfoScreen(
                     )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Вознаграждения будут зачислены на ваш счет ЯИША в течение 24 часов.",
+                    text = "Вознаграждения будут зачислены на ваш счет ЯША в течение 24 часов.",
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
                 )
+                Spacer(modifier = Modifier.height(16.dp))
             }
 
 //            item {
