@@ -1,11 +1,12 @@
 package com.neo.yandexpvz.screens.profileinfo
 
-
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,51 +15,50 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.neo.yandexpvz.HOME_SCREEN
-import com.neo.yandexpvz.PROFILE_INFO_SCREEN
-import com.neo.yandexpvz.R
-import com.neo.yandexpvz.components.DefaultBackArrow
-import com.neo.yandexpvz.ui.theme.OrangeDarkColor
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.neo.yandexpvz.HOME_SCREEN
+import com.neo.yandexpvz.PROFILE_INFO_SCREEN
+import com.neo.yandexpvz.R
 import com.neo.yandexpvz.components.CustomDefaultBtn
+import com.neo.yandexpvz.components.DefaultBackArrow
 import com.neo.yandexpvz.components.ErrorSuggestion
 import com.neo.yandexpvz.ui.theme.OrangeColor
+import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.ui.theme.TextColor
 import java.io.File
 import java.io.InputStream
@@ -66,7 +66,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @Composable
-
+@ExperimentalMaterialApi
 fun ProfileInfoScreen(
     openAndPopUp: (String,String) -> Unit,
     viewModel: ProfileInfoViewModel = hiltViewModel()
@@ -76,15 +76,18 @@ fun ProfileInfoScreen(
     val nameErrorState = remember {
         mutableStateOf(false)
     }
+
+
     val result = remember { mutableStateOf<Bitmap?>(null) }
-    var photoFile: File? =  null
+    val photoFile =  remember { mutableStateOf<File?>(null) }
+
     val loadImage = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()){
         val source = ImageDecoder.createSource(context.contentResolver, it!!)
         result.value= ImageDecoder.decodeBitmap(source)
-        photoFile = createTemoraryFile(context.contentResolver.openInputStream(it),context)
+        photoFile.value = createTemoraryFile(context.contentResolver.openInputStream(it),context)
+        Log.d("PROFILE PHOTO 1","${photoFile.value}")
 
     }
-
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -245,11 +248,9 @@ fun ProfileInfoScreen(
             nameErrorState.value = isNameValid
 
             if (!isNameValid) {
-                if(result.value != null) {
-                    viewModel.updateProfile(photoFile)
-                }else{
-                    viewModel.updateProfile(null)
-                }
+                Log.d("PROFILE PHOTO","${photoFile.value}")
+                viewModel.updateProfile(photoFile.value)
+
             }
         }
         if (viewModel.isLoading) {
@@ -258,8 +259,7 @@ fun ProfileInfoScreen(
     }
 }
 
-
-private fun Context.createImageFile(): File {
+fun Context.createImageFile(): File {
     // Create an image file name
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
     val imageFileName = "JPEG_" + timeStamp + "_"
@@ -271,9 +271,13 @@ private fun Context.createImageFile(): File {
     return image
 }
 
-private fun createTemoraryFile(iStream: InputStream?, context:Context): File {
+fun createTemoraryFile(iStream: InputStream?, context:Context): File {
     val inputStream = iStream
     val file = context.createImageFile()
+//
+//    val f = createTempFile(
+//        directory = context.cacheDir
+//    )
     if (inputStream != null) {
         inputStream.copyTo(file.outputStream())
     }
@@ -335,4 +339,3 @@ private class PhoneOffsetMapper(val mask: String, val numberChar: Char) : Offset
 
 
 }
-

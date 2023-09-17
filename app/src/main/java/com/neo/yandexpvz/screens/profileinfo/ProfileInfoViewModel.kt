@@ -1,6 +1,7 @@
 package com.neo.yandexpvz.screens.profileinfo
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,7 +40,7 @@ class ProfileInfoViewModel @Inject constructor(
         name = input
     }
 
-    fun updateProfile(file:File?){
+    fun updateProfile(file: File?){
         isLoading = true
         val mobile = tokenManager.getUserMobile().toString()
         viewModelScope.launch(Dispatchers.IO) {
