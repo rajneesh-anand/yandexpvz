@@ -51,11 +51,10 @@ fun ProfileScreen(
 ) {
 
     val navItemList = listOf(
-        DrawerNavItem.HomeNav,
-        DrawerNavItem.GiftCardNav,
-        DrawerNavItem.LocationNav,
-        DrawerNavItem.ProfileNav,
+//        DrawerNavItem.HomeNav,
+//        DrawerNavItem.GiftCardNav,
         DrawerNavItem.ProfileInfoNav,
+        DrawerNavItem.SupportNav,
         DrawerNavItem.SignOutNav,
     )
     val rainbowColorsBrush = remember {
@@ -124,7 +123,7 @@ fun ProfileScreen(
                         fontWeight = FontWeight.SemiBold
                     ),
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = viewModel.email,
                     style = TextStyle(
@@ -132,7 +131,7 @@ fun ProfileScreen(
                         fontWeight = FontWeight.Medium
                     )
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 if(viewModel.mobile.isNotEmpty()) {
 
                     Text(
@@ -151,16 +150,13 @@ fun ProfileScreen(
                 }
             }
 
-
-
-
             Spacer(modifier = Modifier.height(32.dp))
         }
 
         items(navItemList) { item ->
             Row ( modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 8.dp)
+                .padding(bottom = 12.dp)
                 .clickable {
                     viewModel.onNavItemClick(restartApp, item.route)
                  },
@@ -180,12 +176,12 @@ fun ProfileScreen(
 
             }
             Divider (
-                color = Color.Gray,
+                color = Color.LightGray,
                 modifier = Modifier
-                    .height(1.dp)
+                    .height(0.8.dp)
                     .fillMaxWidth()
             )
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(8.dp))
 
         }
     }

@@ -261,7 +261,7 @@ fun ProductItem(
             contentDescription = null,
             placeholder = painterResource(R.drawable.product_placeholder),
             modifier = Modifier.size(128.dp),
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Fit,
         )
 
 //        Spacer(modifier = Modifier.width(8.dp))
@@ -301,12 +301,13 @@ fun ProductItem(
 
 
                 if(item.inStock > 0) {
-                    Text(text = item.coinValue.toString())
                     Icon(
                         painter = painterResource(R.drawable.coin),
                         contentDescription = "gold-coins",
                         tint = Color.Unspecified
                     )
+                    Text(text = item.coinValue.toString(),  fontWeight = FontWeight.Medium, fontSize = 18.sp)
+
                     Spacer(
                         Modifier
                             .weight(1f)

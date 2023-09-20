@@ -26,7 +26,6 @@ class GiftViewModel @Inject constructor(
 
     var isLoading: Boolean by mutableStateOf(false)
     var errorText: String by mutableStateOf("")
-
     private var _giftsList: MutableLiveData<List<GiftCard>> = MutableLiveData(listOf())
     val giftList: LiveData<List<GiftCard>> = _giftsList
 

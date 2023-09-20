@@ -46,7 +46,6 @@ import com.neo.yandexpvz.model.GiftCard
 import com.neo.yandexpvz.ui.theme.BlueText
 import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.ui.theme.OrangeLightColor
-import com.neo.yandexpvz.ui.theme.TextColor
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -64,8 +63,6 @@ fun GiftScreen(
     if(networkConnectivity == ConnectionState.Unavailable) {
         InternetConnectionError()
     }else {
-
-
         if (viewModel.isLoading) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -312,7 +309,6 @@ private fun formatDate(date: String): String {
 
         res
     } catch (e: Exception) {
-
         date
     }
 }

@@ -64,5 +64,8 @@
     <string name="no_sufficient_coins">У вас недостаточно монет !</string>
     <string name="change_photo">Изменить фотографию профиля</string>
     <string name="edit_profile">Изменить личную информацию</string>
+    <string name="disclaimer">Создавая учетную запись, вы соглашаетесь с нашими политикой конфиденциальности и условиями</string>
+      <string name="terms_of_use">условиями</string>
+    <string name="privacy_policy">политикой конфиденциальности</string>
 
 </resources>

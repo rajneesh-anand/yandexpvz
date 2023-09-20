@@ -26,21 +26,21 @@ sealed class DrawerNavItem(val tittle: String, val icon: Int, val route: String)
         route = MAP_SCREEN
     )
     object ProfileInfoNav : DrawerNavItem(
-        tittle = "Profile Info",
-        icon = R.drawable.location,
+        tittle = "Информация профиля",
+        icon = R.drawable.avatar,
         route = PROFILE_INFO_SCREEN
     )
 
 
-    object ProfileNav : DrawerNavItem(
-        tittle = "Profile",
-        icon = R.drawable.profile,
+    object SupportNav : DrawerNavItem(
+        tittle = "Поддержка",
+        icon = R.drawable.help,
         route = PROFILE_SCREEN
     )
 
     object SignOutNav : DrawerNavItem(
-        tittle = "Sign Out",
-        icon = R.drawable.profile,
+        tittle = "Выход",
+        icon = R.drawable.logout,
         route = SIGNIN_SCREEN
     )
 }

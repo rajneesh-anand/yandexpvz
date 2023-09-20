@@ -138,14 +138,13 @@ fun ProductScreen(
                         .build(),
                     contentDescription = "product image",
                     placeholder = painterResource(R.drawable.product_placeholder),
-                    modifier = Modifier.size(250.dp),
-                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier.size(256.dp),
+                    contentScale = ContentScale.Fit,
                 )
                 Spacer(modifier = Modifier.height(50.dp))
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
+                        .fillMaxSize()
                         .background(
                             color = MaterialTheme.colors.OrangeLightColor,
                             shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
@@ -155,7 +154,7 @@ fun ProductScreen(
 
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth(),
+                            .fillMaxSize(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Column(

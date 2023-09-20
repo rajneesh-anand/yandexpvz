@@ -46,7 +46,7 @@ fun NavigationDrawerBody(navController: NavController)
         DrawerNavItem.HomeNav,
         DrawerNavItem.GiftCardNav,
         DrawerNavItem.LocationNav,
-        DrawerNavItem.ProfileNav,
+        DrawerNavItem.SupportNav,
     )
 
     LazyColumn(modifier = Modifier.fillMaxWidth()) {

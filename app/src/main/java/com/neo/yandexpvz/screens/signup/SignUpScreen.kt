@@ -1,5 +1,7 @@
 package com.neo.yandexpvz.screens.signup
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -22,16 +25,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-
-
 import com.neo.yandexpvz.HOME_SCREEN
 import com.neo.yandexpvz.R
 import com.neo.yandexpvz.SIGNIN_SCREEN
@@ -46,6 +55,7 @@ import com.neo.yandexpvz.components.CustomMobileField
 import com.neo.yandexpvz.components.CustomPasswordField
 import com.neo.yandexpvz.components.DefaultBackArrow
 import com.neo.yandexpvz.components.ErrorSuggestion
+import com.neo.yandexpvz.model.Highlight
 import com.neo.yandexpvz.ui.theme.BlueText
 import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.ui.theme.WarningColor
@@ -56,7 +66,7 @@ fun SignUpScreen (
     openAndPopUp: (String,String) -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
-
+    val context = LocalContext.current
     val uiState by viewModel.uiState
     val mobileErrorState = remember {
         mutableStateOf(false)
@@ -167,10 +177,33 @@ fun SignUpScreen (
             Spacer(modifier = Modifier.height(4.dp))
             ErrorSuggestion(stringResource(R.string.password_error))
         }
-        Spacer(modifier = Modifier.height(18.dp))
-
+        Spacer(modifier = Modifier.height(16.dp))
+//        AgreeConditionComponent(modifier = Modifier)
+        HighlightedText(
+            text = stringResource(id = R.string.disclaimer),
+            highlights = listOf(
+                Highlight(
+                    text = stringResource(id = R.string.privacy_policy),
+                    data = "https://www.google.com",
+                    onClick = { link ->
+                        context.startActivity( Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(link)
+                    ))
+                    }
+                ),
+                Highlight(
+                    text = stringResource(id = R.string.terms_of_use),
+                    data = "https://www.yandex.com",
+                    onClick = { link ->
+                        context.startActivity( Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(link)))
+                    }
+                )
+            )
+        )
         CustomDefaultBtn(shapeSize = 4f, btnText = R.string.sign_up) {
-
 
             val isMobileValid = uiState.mobile.isValidMobile()
             mobileErrorState.value = !isMobileValid
@@ -197,13 +230,168 @@ fun SignUpScreen (
         if (viewModel.isLoading) {
             CircularProgressIndicator(color = MaterialTheme.colors.OrangeDarkColor)
         }
-
-
     }
-
-
-
-
 }
 
 
+//
+//@Composable
+//fun AgreeConditionComponent(
+//    modifier: Modifier
+//) {
+//    val context = LocalContext.current
+//    val hyperlinkText1 = "условиями"
+//    val hyperlinkText2 = "политикой конфиденциальности"
+//    val annotatedString = buildAnnotatedString {
+//        append("Создавая учетную запись, вы соглашаетесь с нашими")
+//        append(" ")
+//        val start = length
+//        val end = length + hyperlinkText1.length
+//        addStringAnnotation(tag = "условиями", annotation = "", start = start, end = end)
+//        withStyle(
+//            style = SpanStyle(
+//                textDecoration = TextDecoration.Underline,
+//                color = MaterialTheme.colors.BlueText,
+//            ),
+//        ) {
+//            append(hyperlinkText1)
+//        }
+//        append(" ")
+//        append("и")
+//        append(" ")
+//        val s = length
+//        val e = length + hyperlinkText2.length
+//        addStringAnnotation(tag = "политикой конфиденциальности", annotation = "", start = s, end = e)
+//        withStyle(
+//            style = SpanStyle(
+//                textDecoration = TextDecoration.Underline,
+//                color = MaterialTheme.colors.BlueText,
+//            ),
+//        ) {
+//            append(hyperlinkText2)
+//        }
+//    }
+//    Row(
+//        modifier = modifier,
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//        Spacer(modifier = Modifier.width(4.dp))
+//        ClickableText(
+//            text = annotatedString,
+//            style = TextStyle(
+//                fontSize = 12.sp,
+//            ),
+//            onClick = { offset ->
+//                annotatedString.getStringAnnotations(tag = "условиями", start = offset, end = offset)
+//                    .firstOrNull()
+//                    ?.let { context.startActivity( Intent(
+//                        Intent.ACTION_VIEW,
+//                        Uri.parse("https://www.google.com")
+//                    )) }
+//            }
+//        )
+//    }
+//}
+//
+//
+
+
+
+@Composable
+fun HighlightedText(
+    text: String,
+    highlights: List<Highlight>,
+    modifier: Modifier = Modifier
+) {
+    data class TextData(
+        val text: String,
+        val tag: String? = null,
+        val data: String? = null,
+        val onClick: ((data: AnnotatedString.Range<String>) -> Unit)? = null
+    )
+
+    val textData = mutableListOf<TextData>()
+    if (highlights.isEmpty()) {
+        textData.add(
+            TextData(
+                text = text
+            )
+        )
+    } else {
+        var startIndex = 0
+        highlights.forEachIndexed { i, link ->
+            val endIndex = text.indexOf(link.text)
+            if (endIndex == -1) {
+                throw Exception("Highlighted text mismatch")
+            }
+            textData.add(
+                TextData(
+                    text = text.substring(startIndex, endIndex)
+                )
+            )
+            textData.add(
+                TextData(
+                    text = link.text,
+                    tag = "${link.text}_TAG",
+                    data = link.data,
+                    onClick = {
+                        link.onClick(it.item)
+                    }
+                )
+            )
+            startIndex = endIndex + link.text.length
+            if (i == highlights.lastIndex && startIndex < text.length) {
+                textData.add(
+                    TextData(
+                        text = text.substring(startIndex, text.length)
+                    )
+                )
+            }
+        }
+    }
+
+    val annotatedString = buildAnnotatedString {
+        textData.forEach { linkTextData ->
+            if (linkTextData.tag != null && linkTextData.data != null) {
+                pushStringAnnotation(
+                    tag = linkTextData.tag,
+                    annotation = linkTextData.data,
+                )
+                withStyle(
+                    style = SpanStyle(
+                        color = MaterialTheme.colors.BlueText,
+                        textDecoration = TextDecoration.Underline,
+                    ),
+                ) {
+                    append(linkTextData.text)
+                }
+                pop()
+            } else {
+                append(linkTextData.text)
+            }
+        }
+    }
+    ClickableText(
+        text = annotatedString,
+        style = TextStyle(
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Normal,
+//            color = MaterialTheme.colors.BlueText,
+            textAlign = TextAlign.Start
+        ),
+        onClick = { offset ->
+            textData.forEach { annotatedStringData ->
+                if (annotatedStringData.tag != null && annotatedStringData.data != null) {
+                    annotatedString.getStringAnnotations(
+                        tag = annotatedStringData.tag,
+                        start = offset,
+                        end = offset,
+                    ).firstOrNull()?.let {
+                        annotatedStringData.onClick?.invoke(it)
+                    }
+                }
+            }
+        },
+        modifier = modifier
+    )
+}
