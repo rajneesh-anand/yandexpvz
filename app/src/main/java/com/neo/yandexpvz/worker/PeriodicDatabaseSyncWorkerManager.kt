@@ -13,12 +13,12 @@ class PeriodicDatabaseSyncWorkManager @Inject constructor(
     private val workManager: WorkManager
 ) {
     private val WORK_TAG = "yandexWork"
-    private val repeatInterval = 10
-    private val repeatIntervalTimeUnit: TimeUnit = TimeUnit.MINUTES
+    private val repeatInterval = 12
+    private val repeatIntervalTimeUnit: TimeUnit = TimeUnit.HOURS
 
     fun startPeriodicNotifications() {
         val workRequest = PeriodicWorkRequestBuilder<DatabaseSyncWorker>(
-            10,
+            12,
             repeatIntervalTimeUnit
         )
             .addTag(WORK_TAG)

@@ -184,7 +184,7 @@ fun SignUpScreen (
             highlights = listOf(
                 Highlight(
                     text = stringResource(id = R.string.privacy_policy),
-                    data = "https://www.google.com",
+                    data = "https://yasha64.github.io/privacy-policy.html",
                     onClick = { link ->
                         context.startActivity( Intent(
                         Intent.ACTION_VIEW,
@@ -194,7 +194,7 @@ fun SignUpScreen (
                 ),
                 Highlight(
                     text = stringResource(id = R.string.terms_of_use),
-                    data = "https://www.yandex.com",
+                    data = "https://yasha64.github.io/privacy-policy.html",
                     onClick = { link ->
                         context.startActivity( Intent(
                             Intent.ACTION_VIEW,
