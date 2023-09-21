@@ -1,6 +1,7 @@
 package com.neo.yandexpvz.screens.info
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -32,6 +34,7 @@ import com.neo.yandexpvz.components.DefaultBackArrow
 import com.neo.yandexpvz.ui.theme.BlueText
 import com.neo.yandexpvz.ui.theme.OrangeColor
 import com.neo.yandexpvz.ui.theme.OrangeDarkColor
+import com.neo.yandexpvz.ui.theme.OrangeLightColor
 
 @Composable
 @ExperimentalMaterialApi
@@ -79,18 +82,19 @@ fun InfoScreen(
             Text(
               text = buildAnnotatedString {
                    append("Выберите ")
-                   withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.SemiBold)) {
+                   withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.Medium)) {
                        append("Пункт выдачи ")
                    }
-                   append("при покупке товаров на")
+                   append("при покупке товаров на ")
 
-                   withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.SemiBold)) {
+                   withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.Medium)) {
                        append("маркетплейсе Яндекс")
                    }
                  },
-                color = MaterialTheme.colors.BlueText,
+//                color = MaterialTheme.colors.BlueText,
+                fontWeight = FontWeight.Normal,
                 fontSize = 16.sp,
-                textAlign = TextAlign.Center,
+//                textAlign = TextAlign.Center,
             )
                Spacer(modifier = Modifier.height(16.dp))
                Image(painter = painterResource(R.drawable.yandex_1), contentDescription ="yandex one" )
@@ -98,13 +102,14 @@ fun InfoScreen(
                Text(
                    text = buildAnnotatedString {
                        append("Выберите адрес пункта выдачи ")
-                       withStyle(style = SpanStyle( color = MaterialTheme.colors.OrangeColor,fontWeight = FontWeight.SemiBold)) {
+                       withStyle(style = SpanStyle( color = MaterialTheme.colors.OrangeColor,fontWeight = FontWeight.Medium)) {
                            append(" Саратов, 2-й Магнитный проезд, д. 6 ")
                        }
                    },
-                   color = MaterialTheme.colors.BlueText,
+//                   color = MaterialTheme.colors.BlueText,
+                   fontWeight = FontWeight.Normal,
                    fontSize = 16.sp,
-                   textAlign = TextAlign.Center,
+//                   textAlign = TextAlign.Center,
                    )
                Spacer(modifier = Modifier.height(16.dp))
                Image(painter = painterResource(R.drawable.yandex_2), contentDescription ="yandex two" )
@@ -121,22 +126,42 @@ fun InfoScreen(
                 Text(
                     text = buildAnnotatedString {
                         append("Выберите товар в ")
-                        withStyle(style = SpanStyle( color = MaterialTheme.colors.OrangeColor,fontWeight = FontWeight.SemiBold)) {
+                        withStyle(style = SpanStyle( color = MaterialTheme.colors.OrangeColor,fontWeight = FontWeight.Medium)) {
                             append(" Саратов, 2-й Магнитный проезд, д. 6 "
                             )
                         }
                     },
-
+                    fontWeight = FontWeight.Normal,
                     fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
+//                    textAlign = TextAlign.Center,
                     )
                 Spacer(modifier = Modifier.height(16.dp))
-                Text(
-                    text = "Вознаграждения будут зачислены на ваш счет ЯША в течение 24 часов.",
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 32.dp)
+                        .background(
+                            color = MaterialTheme.colors.OrangeLightColor,
+                            shape = RoundedCornerShape(8.dp)
+                        ),
+                ) {
+                    Text(
+                        text = "Вознаграждения будут зачислены на ваш счет ЯША в течение 24 часов.",
+                        modifier = Modifier.padding(vertical = 32.dp, horizontal = 16.dp),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 16.sp,
+//                        textAlign = TextAlign.Center,
+                    )
+                }
+
+
+//                Text(
+//                    text = "Вознаграждения будут зачислены на ваш счет ЯША в течение 24 часов.",
+//                    fontWeight = FontWeight.Medium,
+//                    fontSize = 16.sp,
+//                    textAlign = TextAlign.Center,
+//                )
                 Spacer(modifier = Modifier.height(16.dp))
             }
 
