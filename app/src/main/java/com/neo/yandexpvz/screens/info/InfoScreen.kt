@@ -126,7 +126,7 @@ fun InfoScreen(
                             )
                         }
                     },
-                    color = MaterialTheme.colors.BlueText,
+
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
                     )

@@ -12,7 +12,7 @@ val Teal200 = Color(0xFF03DAC5)
 //custom color
 val Colors.OrangeColor get() = Color(0xFFFF7643);
 val Colors.OrangeDarkColor get() = Color(0xFFF57C00);
-val Colors.OrangeMediumColor get() = Color(0xFFFFA000);
+val Colors.OrangeMediumColor get() = Color(0xFFFACB7C);
 val Colors.OrangeLightColor get() = Color(0xFFFFF5EF);
 val Colors.SecondaryColor get() = Color(0xFF979797)
 val Colors.TextColor get() = Color(0xFF757575)

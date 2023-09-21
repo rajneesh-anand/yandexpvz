@@ -5,6 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.neo.yandexpvz.repository.CoinRepository
+import com.neo.yandexpvz.utils.NetworkUtils
 import com.neo.yandexpvz.utils.TokenManager
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -22,11 +23,14 @@ class DatabaseSyncWorker @AssistedInject constructor(
     private val tokenManager: TokenManager
 ) :
     CoroutineWorker(context, workerParams) {
-    override suspend fun doWork(): Result {
-        CoroutineScope(Dispatchers.IO).launch {
-            coinRepository.insertCoins(tokenManager.getUserMobile().toString())
-        }
 
+
+    override suspend fun doWork(): Result {
+        if(NetworkUtils.isInternetAvailable(context)) {
+            CoroutineScope(Dispatchers.IO).launch {
+                coinRepository.insertCoins(tokenManager.getUserMobile().toString())
+            }
+        }
         return Result.success()
     }
 }

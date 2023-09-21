@@ -30,7 +30,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -128,7 +127,7 @@ fun resources(): Resources {
     return LocalContext.current.resources
 }
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalPagerApi::class)
+
 @ExperimentalMaterialApi
 fun NavGraphBuilder.yandexAppGraph(appState: YandexAppState) {
     composable(SPLASH_SCREEN) {
