@@ -51,10 +51,9 @@ fun ProfileScreen(
 ) {
 
     val navItemList = listOf(
-//        DrawerNavItem.HomeNav,
-//        DrawerNavItem.GiftCardNav,
         DrawerNavItem.ProfileInfoNav,
         DrawerNavItem.SupportNav,
+        DrawerNavItem.FeedbackNav,
         DrawerNavItem.SignOutNav,
     )
     val rainbowColorsBrush = remember {

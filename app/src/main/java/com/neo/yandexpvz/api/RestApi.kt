@@ -1,5 +1,6 @@
 package com.neo.yandexpvz.api
 
+import com.neo.yandexpvz.model.ApiResponse
 import com.neo.yandexpvz.model.CoinList
 import com.neo.yandexpvz.model.GiftCardResponse
 import com.neo.yandexpvz.model.ProductList
@@ -71,6 +72,17 @@ interface RestApi {
         @Part userMobile: MultipartBody.Part,
     ): Response<UserUpdateResponse>
 
+
+
+    @Multipart
+    @POST("user/feedback")
+    suspend fun sendFeedBackMessage(
+        @Part image: MultipartBody.Part,
+        @Part userName: MultipartBody.Part,
+        @Part userMobile: MultipartBody.Part,
+        @Part message: MultipartBody.Part,
+        @Part category:  MultipartBody.Part,
+    ): Response<ApiResponse>
 
 //    @POST("user/fcm/token")
 //    suspend fun fcmToken(@Body token: String) : Response<CommonResponse>

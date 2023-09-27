@@ -39,6 +39,7 @@ import com.google.firebase.messaging.ktx.messaging
 import com.neo.yandexpvz.common.components.PermissionDialog
 import com.neo.yandexpvz.common.components.RationaleDialog
 import com.neo.yandexpvz.common.snackbar.SnackbarManager
+import com.neo.yandexpvz.screens.feedback.FeedBackScreen
 import com.neo.yandexpvz.screens.home.HomeScreen
 import com.neo.yandexpvz.screens.product.ProductScreen
 import com.neo.yandexpvz.screens.signin.SignInScreen
@@ -162,6 +163,10 @@ fun NavGraphBuilder.yandexAppGraph(appState: YandexAppState) {
     }
     composable(PROFILE_INFO_SCREEN) {
         ProfileInfoScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+
+    }
+    composable(FEEDBACK_SCREEN) {
+        FeedBackScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
 
     }
     composable(INFO_SCREEN) {

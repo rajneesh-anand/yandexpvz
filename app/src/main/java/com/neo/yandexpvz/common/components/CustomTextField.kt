@@ -56,3 +56,41 @@ fun CustomTextField(
             .fillMaxWidth()
     )
 }
+
+
+@Composable
+fun MultiLineTextField(
+    placeholder: Int,
+    value: String,
+    label: Int,
+    minLines:Int,
+    maxLines:Int,
+    keyboardType: KeyboardType,
+    visualTransformation: VisualTransformation,
+    errorState: MutableState<Boolean>,
+    onChanged: (String) -> Unit
+) {
+
+    OutlinedTextField(
+        value = value,
+        onValueChange = { onChanged(it) },
+        placeholder = { Text(text = stringResource(placeholder), color = Color.LightGray, fontSize = 18.sp) },
+        label = { Text(text = stringResource(label)) },
+        shape = RoundedCornerShape(8.dp),
+        singleLine = false,
+        maxLines = maxLines,
+        minLines= minLines,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            cursorColor = MaterialTheme.colors.OrangeColor,
+            focusedBorderColor = MaterialTheme.colors.OrangeColor,
+            focusedLabelColor = MaterialTheme.colors.OrangeColor,
+            unfocusedBorderColor= MaterialTheme.colors.OrangeColor,
+            textColor = MaterialTheme.colors.TextColor
+        ),
+        visualTransformation = visualTransformation,
+        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = keyboardType),
+        isError = errorState.value,
+        modifier = Modifier
+            .fillMaxWidth()
+    )
+}

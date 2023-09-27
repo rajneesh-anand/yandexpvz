@@ -1,4 +1,5 @@
 package com.neo.yandexpvz.screens.home
+import com.neo.yandexpvz.FEEDBACK_SCREEN
 import com.neo.yandexpvz.GIFT_SCREEN
 import com.neo.yandexpvz.HOME_SCREEN
 import com.neo.yandexpvz.MAP_SCREEN
@@ -36,6 +37,12 @@ sealed class DrawerNavItem(val tittle: String, val icon: Int, val route: String)
         tittle = "Поддержка",
         icon = R.drawable.help,
         route = PROFILE_SCREEN
+    )
+
+    object FeedbackNav : DrawerNavItem(
+        tittle = "Отзывы",
+        icon = R.drawable.help,
+        route = FEEDBACK_SCREEN
     )
 
     object SignOutNav : DrawerNavItem(
