@@ -76,7 +76,7 @@ fun SignInScreen(
     }
 
     if(networkConnectivity == ConnectionState.Unavailable) {
-        InternetConnectionError()
+        InternetConnectionError {}
     }else {
 
         Column(

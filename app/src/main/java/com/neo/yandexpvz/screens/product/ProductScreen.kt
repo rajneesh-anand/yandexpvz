@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -82,119 +83,112 @@ fun ProductScreen(
             openAndPopUp("$REDEEM_SCREEN?$REDEEM_ID=${viewModel.redeemID}", "$PRODUCT_SCREEN?$PRODUCT_ID=${productId}")
         }
     }
-//        if (viewModel.isLoading) {
-//        Column(
-//            modifier = Modifier.fillMaxSize(),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
-//        ) {
-//            CircularProgressIndicator()
-//        }
-//    }
-
-
 
     if(networkConnectivity == ConnectionState.Unavailable) {
-        InternetConnectionError()
+        InternetConnectionError{ viewModel.initialize(productId) }
     }else {
+        if (viewModel.isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colors.OrangeDarkColor)
+        }else{
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color(0x8DFFFFFF))
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally,
+
+            ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp, end = 15.dp, top = 15.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = {
+                        restartApp(HOME_SCREEN)
+                    },
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colors.OrangeLightColor,
+                            shape = CircleShape
+                        )
+                        .clip(CircleShape)
+
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.back_icon),
+                        contentDescription = "Arrow Back"
+                    )
+                }
+            }
+
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(productsInfo.value?.image)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "product image",
+                placeholder = painterResource(R.drawable.product_placeholder),
+                modifier = Modifier.size(256.dp),
+                contentScale = ContentScale.Fit,
+            )
+            Spacer(modifier = Modifier.height(50.dp))
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(color = Color(0x8DFFFFFF))
-                    .verticalScroll(rememberScrollState()),
-                     horizontalAlignment = Alignment.CenterHorizontally,
+                    .background(
+                        color = MaterialTheme.colors.OrangeLightColor,
+                        shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
+                    )
 
-                ) {
+            ) {
+
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 15.dp, end = 15.dp, top = 15.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                        .fillMaxSize(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(
-                        onClick = {
-                            restartApp(HOME_SCREEN)
-                        },
+                    Column(
                         modifier = Modifier
-                            .background(
-                                color = MaterialTheme.colors.OrangeLightColor,
-                                shape = CircleShape
-                            )
-                            .clip(CircleShape)
-
+                            .weight(1f)
+                            .padding(15.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.back_icon),
-                            contentDescription = "Arrow Back"
+                        Text(
+                            text = productsInfo.value?.name.toString(),
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
                         )
-                    }
-                }
-
-                AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(productsInfo.value?.image)
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = "product image",
-                    placeholder = painterResource(R.drawable.product_placeholder),
-                    modifier = Modifier.size(256.dp),
-                    contentScale = ContentScale.Fit,
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            color = MaterialTheme.colors.OrangeLightColor,
-                            shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
+                        Spacer(modifier = Modifier.height(25.dp))
+                        Text(
+                            text = productsInfo.value?.description.toString(),
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colors.TextColor
                         )
+                        Spacer(modifier = Modifier.height(25.dp))
 
-                ) {
+                        if (productsInfo.value?.coinValue != null) {
 
-                    Row(
-                        modifier = Modifier
-                            .fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(15.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Text(
-                                text = productsInfo.value?.name.toString(),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp
-                            )
-                            Spacer(modifier = Modifier.height(25.dp))
-                            Text(
-                                text = productsInfo.value?.description.toString(),
-                                fontSize = 16.sp,
-                                color = MaterialTheme.colors.TextColor
-                            )
-                            Spacer(modifier = Modifier.height(25.dp))
-
-                            if(productsInfo.value?.coinValue != null){
-
-                                if (balancedCoin.value!! >= productsInfo.value?.coinValue!! ) {
-                                  RedeemCard { viewModel.onRedeemCoin() }
-                                }else{
-                                    Text(
-                                        text = stringResource(R.string.no_sufficient_coins),
-                                        color = MaterialTheme.colors.OrangeDarkColor,
-                                        fontWeight = FontWeight.SemiBold,
-                                        fontSize = 24.sp,
+                            if (balancedCoin.value!! >= productsInfo.value?.coinValue!!) {
+                                RedeemCard { viewModel.onRedeemCoin() }
+                            } else {
+                                Text(
+                                    text = stringResource(R.string.no_sufficient_coins),
+                                    color = MaterialTheme.colors.OrangeDarkColor,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 24.sp,
 
                                     )
-                                 }
                             }
                         }
                     }
                 }
             }
         }
+    }
+    }
 }
 
 @ExperimentalMaterialApi

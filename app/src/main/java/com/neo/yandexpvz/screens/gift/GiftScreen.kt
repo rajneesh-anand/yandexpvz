@@ -61,7 +61,7 @@ fun GiftScreen(
     val itemsList: List<GiftCard> = giftList.value!!
 
     if(networkConnectivity == ConnectionState.Unavailable) {
-        InternetConnectionError()
+        InternetConnectionError { viewModel.initialize() }
     }else {
         if (viewModel.isLoading) {
             Column(

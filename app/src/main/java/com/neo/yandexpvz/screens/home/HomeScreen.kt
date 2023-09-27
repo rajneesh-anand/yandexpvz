@@ -64,7 +64,7 @@ fun HomeScreen(
 
 
     if(networkConnectivity == ConnectionState.Unavailable) {
-        InternetConnectionError()
+        InternetConnectionError { viewModel.initialize() }
     }else{
         Column(
             modifier = Modifier

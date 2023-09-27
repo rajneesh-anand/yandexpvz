@@ -3,10 +3,8 @@ package com.neo.yandexpvz.firebase
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.core.app.NotificationCompat
@@ -16,16 +14,9 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.neo.yandexpvz.MainActivity
 import com.neo.yandexpvz.R
-import com.neo.yandexpvz.api.RestApi
-import com.neo.yandexpvz.db.CoinDao
 import com.neo.yandexpvz.repository.dataStore
-import com.neo.yandexpvz.utils.TokenManager
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.random.Random
 //
 //@SuppressLint("MissingPermission")
@@ -94,7 +85,7 @@ class YandexPVZFirebaseMessageService : FirebaseMessagingService() {
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setContentTitle(message.title)
             .setContentText(message.body)
-            .setSmallIcon(R.drawable.coin)
+            .setSmallIcon(R.drawable.ic_notification)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
@@ -116,10 +107,6 @@ class YandexPVZFirebaseMessageService : FirebaseMessagingService() {
         // FCM registration token to your app server.
         super.onNewToken(token)
         GlobalScope.launch { saveFCMToken(token) }
-
-
-
-
     }
 
     private suspend fun saveFCMToken(token: String) {
