@@ -16,7 +16,7 @@ import com.neo.yandexpvz.repository.CoinRepository
 import com.neo.yandexpvz.repository.ProductRepository
 import com.neo.yandexpvz.utils.NetworkResult
 import com.neo.yandexpvz.utils.TokenManager
-import com.neo.yandexpvz.worker.PeriodicDatabaseSyncWorkManager
+//import com.neo.yandexpvz.worker.PeriodicDatabaseSyncWorkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +33,7 @@ class HomeScreenViewModel @Inject constructor(
     private val coinRepository: CoinRepository,
     private val productRepository: ProductRepository,
     private val tokenManager: TokenManager,
-    private val workManager: PeriodicDatabaseSyncWorkManager,
+
     ): ViewModel() {
 
     var isLoading: Boolean by mutableStateOf(false)
@@ -89,13 +89,11 @@ class HomeScreenViewModel @Inject constructor(
         _homeState.update { it.copy(   image = tokenManager.getUserImage().toString()) }
 
         fetchCoinBalance()
-        workManager.startPeriodicNotifications()
 
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 when (val response = productRepository.fetchProductList()) {
                     is NetworkResult.Success -> {
-//                        _homeState.value = UserHomeUIState(errorText = "")
                         _homeState.update { it.copy( errorText = "") }
                         _productsList.postValue(response.data!!.results)
                         isLoading = false

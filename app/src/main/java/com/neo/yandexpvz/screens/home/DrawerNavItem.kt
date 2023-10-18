@@ -41,7 +41,7 @@ sealed class DrawerNavItem(val tittle: String, val icon: Int, val route: String)
 
     object FeedbackNav : DrawerNavItem(
         tittle = "Отзывы",
-        icon = R.drawable.help,
+        icon = R.drawable.email,
         route = FEEDBACK_SCREEN
     )
 

@@ -20,20 +20,18 @@ class CoinRepository @Inject constructor(
     @ApplicationContext private val context: Context,
 )
 {
+//    private var _productsList: MutableLiveData<List<Product>> = MutableLiveData(listOf())
+//    val productsList: LiveData<List<Product>> = _productsList
 
 
-    private var _productsList: MutableLiveData<List<Product>> = MutableLiveData(listOf())
-    val productsList: LiveData<List<Product>> = _productsList
-
-
-    private var balancedCoinLiveData = MutableLiveData<Int>()
+    private var _balancedCoins = MutableLiveData<Int>()
     val balancedCoins: LiveData<Int>
-        get() = balancedCoinLiveData
+        get() = _balancedCoins
 
     suspend fun insertCoins(mobileId: String)  {
-
         if(NetworkUtils.isInternetAvailable(context)){
             val numberOfRecords = dao.getNumberOfRecords(mobileId)
+            Log.d("Number of records", numberOfRecords.toString())
             val result = api.getCoins(mobileId, numberOfRecords.toString())
             if(result?.body() != null){
                 dao.insertCoin(result.body()!!.results)
@@ -42,7 +40,7 @@ class CoinRepository @Inject constructor(
             val sumEarnedCoins = dao.sumEarnedCoins(mobileId)
             val sumSpentCoins = dao.sumSpentCoins(mobileId)
             val balaceCoin = sumEarnedCoins-sumSpentCoins
-            balancedCoinLiveData.postValue(balaceCoin)
+            _balancedCoins.postValue(balaceCoin)
 
         }
         else{
@@ -58,7 +56,7 @@ class CoinRepository @Inject constructor(
         val sumEarnedCoins = dao.sumEarnedCoins(mobileId)
         val sumSpentCoins = dao.sumSpentCoins(mobileId)
         val balaceCoin = sumEarnedCoins-sumSpentCoins
-        balancedCoinLiveData.postValue(balaceCoin)
+        _balancedCoins.postValue(balaceCoin)
     }
 
 //

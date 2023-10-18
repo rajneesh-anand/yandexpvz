@@ -75,7 +75,7 @@ interface RestApi {
 
 
     @Multipart
-    @POST("user/feedback")
+    @POST("feedback/create")
     suspend fun sendFeedBackMessage(
         @Part image: MultipartBody.Part,
         @Part userName: MultipartBody.Part,
