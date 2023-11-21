@@ -11,6 +11,7 @@ import androidx.work.WorkerParameters
 import com.neo.yandexpvz.repository.CoinRepository
 import com.neo.yandexpvz.utils.TokenManager
 import com.neo.yandexpvz.worker.DatabaseSyncWorker
+import com.yandex.mapkit.MapKitFactory
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -23,6 +24,14 @@ import javax.inject.Inject
 class YandexApplication() : Application(), Configuration.Provider {
     @Inject
     lateinit var workerFactory: CustomWorkerFactory
+    override fun onCreate() {
+        super.onCreate()
+
+        // Reading API key from BuildConfig.
+        // Do not forget to add your MAPKIT_API_KEY property to local.properties file.
+        MapKitFactory.setApiKey(BuildConfig.MAPKIT_API_KEY)
+    }
+
     override fun getWorkManagerConfiguration() =
         Configuration.Builder()
             .setMinimumLoggingLevel(android.util.Log.INFO)

@@ -3,6 +3,7 @@ package com.neo.yandexpvz
 import android.Manifest
 import android.content.res.Resources
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
@@ -18,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
@@ -49,6 +49,7 @@ import kotlinx.coroutines.CoroutineScope
 import com.neo.yandexpvz.screens.gift.GiftScreen
 import com.neo.yandexpvz.screens.home.BottomNavigationBar
 import com.neo.yandexpvz.screens.info.InfoScreen
+import com.neo.yandexpvz.screens.item.ItemScreen
 import com.neo.yandexpvz.screens.map.MapScreen
 import com.neo.yandexpvz.screens.password.PasswordScreen
 import com.neo.yandexpvz.screens.profile.ProfileScreen
@@ -67,8 +68,8 @@ fun YandexApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             RequestNotificationPermissionDialog()
         }
-        subscribeTopics()
-        Surface() {
+        SubscribeTopics()
+        Surface {
             val appState = rememberAppState()
             Scaffold(
                 snackbarHost = {
@@ -92,7 +93,7 @@ fun YandexApp() {
 //                    NavigationDrawerBody(appState.navController)
 //                },
                 bottomBar = {
-                        BottomNavigationBar(appState.navController, appState.scaffoldState,)
+                        BottomNavigationBar(appState.navController, appState.scaffoldState)
                 }
             ) { innerPaddingModifier ->
                 NavHost(
@@ -173,13 +174,16 @@ fun NavGraphBuilder.yandexAppGraph(appState: YandexAppState) {
         InfoScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
     }
     composable(MAP_SCREEN) {
-        MapScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+        MapScreen()
     }
 
     composable(GIFT_SCREEN) {
         GiftScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
     }
 
+    composable(ITEM_SCREEN) {
+        ItemScreen(openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) })
+    }
     composable(
         route = "$PRODUCT_SCREEN$PRODUCT_ID_ARG",
         arguments = listOf(navArgument(PRODUCT_ID) { defaultValue = PRODUCT_DEFAULT_ID })
@@ -218,16 +222,16 @@ fun RequestNotificationPermissionDialog() {
 }
 
 @Composable
-fun subscribeTopics() {
+fun SubscribeTopics() {
 //    val context = LocalContext.current
 
     Firebase.messaging.subscribeToTopic(USER_NOTIFICATION_TOPIC)
         .addOnCompleteListener { task ->
-            var msg = "Subscribed"
-            if (!task.isSuccessful) {
-                msg = "Subscribe failed"
-            }
-
+            Log.d("FCM-SUBSCRIBE", task.toString())
+//            var msg = "Subscribed"
+//            if (!task.isSuccessful) {
+//                msg = "Subscribe failed"
+//            }
 //           Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
 

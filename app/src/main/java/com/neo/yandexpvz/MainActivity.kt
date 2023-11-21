@@ -10,6 +10,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.neo.yandexpvz.worker.DatabaseSyncWorker
+import com.yandex.mapkit.MapKitFactory
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
 
@@ -20,7 +21,8 @@ import java.util.concurrent.TimeUnit
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val workRequest = PeriodicWorkRequestBuilder<DatabaseSyncWorker>(12, TimeUnit.HOURS)
+//        MapKitFactory.initialize(this)
+        val workRequest = PeriodicWorkRequestBuilder<DatabaseSyncWorker>(6, TimeUnit.HOURS)
             .addTag("yandexWork")
             .build()
         WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork("yandexWork",

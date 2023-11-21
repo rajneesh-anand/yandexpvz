@@ -1,8 +1,10 @@
 package com.neo.yandexpvz.api
 
 import com.neo.yandexpvz.model.ApiResponse
+import com.neo.yandexpvz.model.BlogResponse
 import com.neo.yandexpvz.model.CoinList
 import com.neo.yandexpvz.model.GiftCardResponse
+import com.neo.yandexpvz.model.ItemResponse
 import com.neo.yandexpvz.model.ProductList
 import com.neo.yandexpvz.model.ProductResponse
 import com.neo.yandexpvz.model.RedeemRequest
@@ -34,6 +36,14 @@ interface RestApi {
 
     @GET("product/products-list")
     suspend fun fetchAllProducts(): Response<ProductList>
+
+
+    @GET("item/items-list")
+    suspend fun fetchItems(): Response<ItemResponse>
+
+    @GET("blog/blogs-list")
+    suspend fun fetchBlogs(): Response<BlogResponse>
+
 
     @GET("user/gifts/{mobileId}")
     suspend fun fetchUserGiftCards(@Path("mobileId") mobileId:String): Response<GiftCardResponse>
@@ -71,8 +81,6 @@ interface RestApi {
         @Part userName: MultipartBody.Part,
         @Part userMobile: MultipartBody.Part,
     ): Response<UserUpdateResponse>
-
-
 
     @Multipart
     @POST("feedback/create")

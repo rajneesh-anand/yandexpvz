@@ -35,6 +35,7 @@ import com.neo.yandexpvz.ui.theme.BlueText
 import com.neo.yandexpvz.ui.theme.OrangeColor
 import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.ui.theme.OrangeLightColor
+import com.neo.yandexpvz.ui.theme.Yellow
 
 @Composable
 @ExperimentalMaterialApi
@@ -74,13 +75,33 @@ fun InfoScreen(
         ) {
            item {
                
-               Image(
-                   painter = painterResource(id = R.drawable.step_1),
-                   contentDescription = "step_1"
-               )
+//               Image(
+//                   painter = painterResource(id = R.drawable.step_1),
+//                   contentDescription = "step_1"
+//               )
+
+
+               Row(
+                   modifier = Modifier
+                       .fillMaxWidth()
+                       .padding(vertical = 10.dp)
+                       .background(
+                           color = MaterialTheme.colors.Yellow,
+                           shape = RoundedCornerShape(4.dp)
+                       ),
+                   horizontalArrangement = Arrangement.Center,
+                   verticalAlignment = Alignment.CenterVertically
+               ) {
+                   Text(
+                       text = "ШАГ 1",
+                       modifier = Modifier.padding(vertical = 10.dp),
+                       fontWeight = FontWeight.Medium,
+                       fontSize = 24.sp,
+                   )
+               }
                Spacer(modifier = Modifier.height(16.dp))
-            Text(
-              text = buildAnnotatedString {
+              Text(
+                  text = buildAnnotatedString {
                    append("Выберите ")
                    withStyle(style = SpanStyle(color = MaterialTheme.colors.OrangeDarkColor, fontWeight = FontWeight.Medium)) {
                        append("Пункт выдачи ")
@@ -118,10 +139,28 @@ fun InfoScreen(
                 Spacer(modifier = Modifier.height(24.dp))
             }
             item {
-                Image(
-                    painter = painterResource(id = R.drawable.step_2),
-                    contentDescription = "step_2"
-                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.step_2),
+//                    contentDescription = "step_2"
+//                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)
+                        .background(
+                            color = MaterialTheme.colors.Yellow,
+                            shape = RoundedCornerShape(4.dp)
+                        ),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "ШАГ 2",
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 24.sp,
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = buildAnnotatedString {

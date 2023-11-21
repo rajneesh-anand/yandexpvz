@@ -4,6 +4,7 @@ package com.neo.yandexpvz.screens.product
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -43,6 +45,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -63,6 +67,7 @@ import com.neo.yandexpvz.ui.theme.BlueText
 import com.neo.yandexpvz.ui.theme.OrangeDarkColor
 import com.neo.yandexpvz.ui.theme.OrangeLightColor
 import com.neo.yandexpvz.ui.theme.TextColor
+import com.neo.yandexpvz.ui.theme.WhiteColor
 
 
 @Composable
@@ -142,35 +147,48 @@ fun ProductScreen(
                         color = MaterialTheme.colors.OrangeLightColor,
                         shape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp)
                     )
+                    .padding(start = 15.dp, end = 15.dp, top = 30.dp, bottom = 30.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
 
             ) {
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(15.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
                         Text(
                             text = productsInfo.value?.name.toString(),
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
                         Spacer(modifier = Modifier.height(25.dp))
+
+                        var seeMore by remember { mutableStateOf(true) }
+
                         Text(
                             text = productsInfo.value?.description.toString(),
                             fontSize = 16.sp,
-                            color = MaterialTheme.colors.TextColor
+                            color = MaterialTheme.colors.TextColor,
+                            maxLines = if (seeMore) 5 else Int.MAX_VALUE,
+                            overflow = TextOverflow.Ellipsis,
+
                         )
-                        Spacer(modifier = Modifier.height(25.dp))
-
+                        val textButton = if (seeMore) {
+                            stringResource(id = R.string.see_more)
+                        } else {
+                            stringResource(id = R.string.see_less)
+                        }
+                        Text(
+                            text = textButton,
+                            style = MaterialTheme.typography.button,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colors.BlueText,
+                            modifier = Modifier
+                                .heightIn(20.dp)
+                                .fillMaxWidth()
+                                .padding(top = 15.dp)
+                                .clickable {
+                                    seeMore = !seeMore
+                                }
+                        )
+                        Spacer(Modifier.height(40.dp))
                         if (productsInfo.value?.coinValue != null) {
-
                             if (balancedCoin.value!! >= productsInfo.value?.coinValue!!) {
                                 RedeemCard { viewModel.onRedeemCoin() }
                             } else {
@@ -184,10 +202,9 @@ fun ProductScreen(
                             }
                         }
                     }
-                }
+
             }
         }
-    }
     }
 }
 

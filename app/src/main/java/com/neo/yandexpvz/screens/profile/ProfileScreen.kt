@@ -52,6 +52,7 @@ fun ProfileScreen(
 
     val navItemList = listOf(
         DrawerNavItem.ProfileInfoNav,
+        DrawerNavItem.GiftCardNav,
         DrawerNavItem.SupportNav,
         DrawerNavItem.FeedbackNav,
         DrawerNavItem.SignOutNav,

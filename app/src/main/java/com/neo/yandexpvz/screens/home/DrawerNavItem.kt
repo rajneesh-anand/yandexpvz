@@ -16,7 +16,7 @@ sealed class DrawerNavItem(val tittle: String, val icon: Int, val route: String)
         route = HOME_SCREEN
     )
     object GiftCardNav : DrawerNavItem(
-        tittle = "Gift Card",
+        tittle = "Подарочная карта",
         icon = R.drawable.gift_icon,
         route = GIFT_SCREEN
     )

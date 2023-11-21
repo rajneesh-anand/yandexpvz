@@ -1,8 +1,6 @@
 package com.neo.yandexpvz.utils
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import androidx.compose.ui.res.stringResource
 import com.neo.yandexpvz.R
 
 sealed class OnBoardingPage(

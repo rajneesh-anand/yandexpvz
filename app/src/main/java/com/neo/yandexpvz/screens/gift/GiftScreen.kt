@@ -1,6 +1,7 @@
 package com.neo.yandexpvz.screens.gift
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,9 +17,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -28,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,7 +43,6 @@ import com.neo.yandexpvz.GIFT_SCREEN
 import com.neo.yandexpvz.HOME_SCREEN
 import com.neo.yandexpvz.R
 import com.neo.yandexpvz.common.components.InternetConnectionError
-import com.neo.yandexpvz.components.DefaultBackArrow
 import com.neo.yandexpvz.internet.ConnectionState
 import com.neo.yandexpvz.internet.connectivityState
 import com.neo.yandexpvz.model.GiftCard
@@ -75,7 +78,7 @@ fun GiftScreen(
             }
         } else {
 
-            if (itemsList.size > 0) {
+            if (itemsList.isNotEmpty()) {
 
                 Column(
                     modifier = Modifier
@@ -86,14 +89,28 @@ fun GiftScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
-
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Box(modifier = Modifier.weight(0.3f)) {
-                            DefaultBackArrow {
-                                openAndPopUp(HOME_SCREEN, GIFT_SCREEN)
+                            IconButton(
+                                onClick = {
+                                    openAndPopUp(HOME_SCREEN, GIFT_SCREEN)
+                                },
+                                modifier = Modifier
+                                    .background(
+                                        color = MaterialTheme.colors.OrangeLightColor,
+                                        shape = CircleShape
+                                    )
+                                    .clip(CircleShape)
+
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.back_icon),
+                                    contentDescription = "Arrow Back"
+                                )
                             }
                         }
+
                         Box(modifier = Modifier.weight(0.7f)) {
                             Text(
                                 text = stringResource(id = R.string.gifts),
@@ -115,14 +132,28 @@ fun GiftScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
-
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier.weight(0.3f)) {
-                        DefaultBackArrow {
-                            openAndPopUp(HOME_SCREEN, GIFT_SCREEN)
+                        IconButton(
+                            onClick = {
+                                openAndPopUp(HOME_SCREEN, GIFT_SCREEN)
+                            },
+                            modifier = Modifier
+                                .background(
+                                    color = MaterialTheme.colors.OrangeLightColor,
+                                    shape = CircleShape
+                                )
+                                .clip(CircleShape)
+
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.back_icon),
+                                contentDescription = "Arrow Back"
+                            )
                         }
                     }
+
                     Box(modifier = Modifier.weight(0.7f)) {
                         Text(
                             text = stringResource(id = R.string.gifts),
@@ -144,8 +175,7 @@ fun GiftScreen(
                         contentDescription = "No Internet",
                         modifier = Modifier.size(240.dp)
                     )
-//                Spacer(modifier = Modifier.height(32.dp))
-//                Text(text = "Redeem your coins to  !")
+
                 }
             }
         }
@@ -284,8 +314,6 @@ fun GiftItem(item: GiftCard) {
                         text = "Код : " + ("${item.redeemCode}").uppercase(),
                         fontSize =  32.sp,
                         fontWeight = FontWeight.Medium,
-
-
                         style = MaterialTheme.typography.h1,
                         color= Color.White,
                         modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp)
@@ -302,9 +330,8 @@ fun GiftItem(item: GiftCard) {
 
 private fun formatDate(date: String): String {
     return try {
-        val dateSt = date
         val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-        val formattedDate = LocalDateTime.parse(dateSt, dateFormatter)
+        val formattedDate = LocalDateTime.parse(date, dateFormatter)
         val res = DateTimeFormatter.ofPattern("dd-MM-yyyy").format(formattedDate)
 
         res

@@ -17,19 +17,33 @@ buildscript {
         classpath "com.google.gms:google-services:$google_services_version"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
-
     }
+
 }
 
 plugins {
-
     id 'com.android.application' version "${gradle_version}" apply false
     id 'com.android.library' version "${gradle_version}" apply false
     id 'org.jetbrains.kotlin.android' version "${kotlin_version}" apply false
     id 'org.jetbrains.kotlin.plugin.serialization' version "${kotlin_version}" apply false
     id 'com.google.firebase.crashlytics' version '2.9.9' apply false
+}
 
 
+
+ext {
+       mapkitApiKey = getMapkitApiKey()
+}
+
+
+private String getMapkitApiKey() {
+    def properties = new Properties()
+    project.file("local.properties").withInputStream { properties.load(it) }
+    def value = properties.getProperty("MAPKIT_API_KEY", "")
+    if (value.isEmpty()) {
+        throw new InvalidUserDataException("MapKit API key is not provided. Set your API key in the project's local.properties file: `MAPKIT_API_KEY=<your-api-key-value>`.")
+    }
+    return value
 }
 
 

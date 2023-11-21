@@ -1,5 +1,7 @@
 package com.neo.yandexpvz.utils
 
+import com.yandex.mapkit.geometry.Point
+
 object Constants {
 
 //  const val BASE_URL = "http://185.46.11.105:8800/api/"
@@ -18,3 +20,4 @@ object Constants {
     const val USER_NOTIFICATION_TOPIC = "yandexpvz"
 
 }
+

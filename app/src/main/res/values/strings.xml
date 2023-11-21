@@ -76,6 +76,9 @@
     <string name="screenshot">прикрепите скриншот (если ошибка)</string>
     <string name="send_message">Отправить сообщение</string>
     <string name="message_category">Категория сообщения</string>
+    <string name="see_more">Узнать больше</string>
+    <string name="see_less">Смотрите меньше</string>
+    <string name="product_image_content">Product Image</string>
 
 
 </resources>

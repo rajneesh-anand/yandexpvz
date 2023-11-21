@@ -18,17 +18,19 @@ android {
         applicationId "com.neo.yandexpvz"
         minSdk 29
         targetSdk 33
-        versionCode 4
-        versionName "1.4"
-
+        versionCode 5
+        versionName "1.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
+        buildConfigField "String", "MAPKIT_API_KEY", "\"${mapkitApiKey}\""
     }
 
     buildTypes {
+
         release {
+
             debuggable false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -79,6 +81,8 @@ dependencies {
     // Google Maps
     implementation 'com.google.maps.android:maps-compose:2.11.4'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+    implementation 'com.yandex.android:maps.mobile:4.4.0-lite'
 
 
     implementation "androidx.core:core-ktx:1.10.0"
